@@ -27,4 +27,4 @@ Users can revoke access at any time from their LinkedIn account settings.
 
 ## Contact
 For any privacy-related concerns, please contact:
-Email: your-email@example.com
+Email: madhusanka2023.me@gmail.com

@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, Res, UseGuards, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
@@ -14,14 +14,33 @@ export class AuthController {
   }
 
   @Get('linkedin/callback')
-  @UseGuards(AuthGuard('linkedin'))
-  async linkedinAuthCallback(@Req() req, @Res() res: Response) {
-    // Handle LinkedIn OAuth callback
-    const { access_token, user } = await this.authService.login(req.user);
-    
-    // Redirect to frontend with token
+  async linkedinAuthCallback(@Query('error') error: string, @Query('error_description') errorDescription: string, @Req() req, @Res() res: Response) {
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-    res.redirect(`${frontendUrl}/auth/callback?token=${access_token}`);
+    
+    // Handle OAuth errors (user cancelled or denied)
+    if (error) {
+      return res.redirect(`${frontendUrl}/?error=${error}&message=${encodeURIComponent(errorDescription || 'Authentication failed')}`);
+    }
+
+    try {
+      // Apply LinkedIn auth guard only if no error
+      const guard = new (AuthGuard('linkedin'))();
+      await guard.canActivate({
+        switchToHttp: () => ({
+          getRequest: () => req,
+          getResponse: () => res,
+        }),
+      } as any);
+
+      // Handle LinkedIn OAuth callback
+      const { access_token, user } = await this.authService.login(req.user);
+      
+      // Redirect to frontend with token
+      res.redirect(`${frontendUrl}/auth/callback?token=${access_token}`);
+    } catch (err) {
+      // Handle authentication errors
+      return res.redirect(`${frontendUrl}/?error=auth_failed&message=${encodeURIComponent('Authentication failed. Please try again.')}`);
+    }
   }
 
   @Get('status')

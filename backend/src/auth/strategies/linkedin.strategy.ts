@@ -20,12 +20,13 @@ export class LinkedInStrategy extends PassportStrategy(OAuth2Strategy, 'linkedin
     private readonly authService: AuthService,
   ) {
     super({
-      authorizationURL: 'https://www.linkedin.com/oauth/v2/authorization',
+      authorizationURL: 'https://www.linkedin.com/oauth/v2/authorization?prompt=login',
       tokenURL: 'https://www.linkedin.com/oauth/v2/accessToken',
       clientID: configService.get<string>('LINKEDIN_CLIENT_ID'),
       clientSecret: configService.get<string>('LINKEDIN_CLIENT_SECRET'),
       callbackURL: configService.get<string>('LINKEDIN_CALLBACK_URL'),
       scope: ['openid', 'profile', 'email', 'w_member_social'],
+      state: false, // Disable state to avoid session requirement
     });
   }
 

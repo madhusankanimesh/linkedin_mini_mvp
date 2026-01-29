@@ -51,4 +51,18 @@ export class AuthController {
       user: req.user,
     };
   }
+
+  @Get('logout')
+  async logout(@Res() res: Response) {
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    
+    // Clear any server-side sessions if needed
+    // For now, we rely on client-side token removal
+    
+    return res.json({ 
+      success: true, 
+      message: 'Logged out successfully',
+      linkedinLogoutUrl: 'https://www.linkedin.com/m/logout'
+    });
+  }
 }

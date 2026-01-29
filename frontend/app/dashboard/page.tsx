@@ -79,9 +79,36 @@ export default function Dashboard() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('linkedin_token');
-    router.push('/');
+  const handleLogout = async () => {
+    try {
+      // Call backend logout endpoint
+      await fetch('http://localhost:3000/auth/logout', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('linkedin_token')}`
+        }
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Clear all local storage
+      localStorage.removeItem('linkedin_token');
+      localStorage.clear();
+      
+      // Also logout from LinkedIn to clear their session
+      // Open LinkedIn logout in a hidden iframe or new window
+      const linkedinLogoutUrl = 'https://www.linkedin.com/m/logout';
+      const logoutWindow = window.open(linkedinLogoutUrl, '_blank', 'width=1,height=1');
+      
+      // Close the logout window after 2 seconds
+      setTimeout(() => {
+        if (logoutWindow) {
+          logoutWindow.close();
+        }
+        // Redirect to home page
+        router.push('/');
+      }, 2000);
+    }
   };
 
   const handleGenerateAI = async () => {

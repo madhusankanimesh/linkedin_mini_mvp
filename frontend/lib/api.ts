@@ -27,10 +27,17 @@ export const authAPI = {
 
 export const userAPI = {
   getProfile: () => api.get('/user/profile'),
+  getPreferences: () => api.get('/user/preferences'),
+  updatePreferences: (preferences: any) => api.put('/user/preferences', preferences),
+  getDashboard: () => api.get('/user/dashboard'),
 };
 
 export const postsAPI = {
-  createPost: (content: string) => api.post('/posts/create', { content }),
+  createPost: (content: string, isAIGenerated: boolean = false) => 
+    api.post('/posts/create', { content, isAIGenerated }),
+  generateAIContent: () => api.get('/posts/generate-ai-content'),
+  getMyPosts: () => api.get('/posts/my-posts'),
+  getAllPosts: () => api.get('/posts/all'),
   getLinkedInProfile: () => api.get('/posts/linkedin-profile'),
 };
 

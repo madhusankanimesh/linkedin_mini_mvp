@@ -53,7 +53,19 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem('linkedin_token');
-    router.push('/');
+    
+    // Clear LinkedIn OAuth session by redirecting to LinkedIn's logout
+    // This ensures the user can log in with a different account next time
+    const linkedinLogoutUrl = 'https://www.linkedin.com/m/logout';
+    const returnUrl = window.location.origin;
+    
+    // Open LinkedIn logout in a popup or iframe to clear session
+    window.open(linkedinLogoutUrl, '_blank', 'width=1,height=1');
+    
+    // Small delay to allow logout request to process
+    setTimeout(() => {
+      router.push('/');
+    }, 500);
   };
 
   const handlePostSubmit = async (e: React.FormEvent) => {

@@ -45,6 +45,14 @@ export default function Dashboard() {
   const [generatingAI, setGeneratingAI] = useState(false);
   const [activeTab, setActiveTab] = useState<'create' | 'history' | 'preferences'>('create');
 
+  // Auto-resize textarea function
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPostContent(e.target.value);
+    // Auto-resize
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('linkedin_token');
     if (!token) {
@@ -294,9 +302,9 @@ export default function Dashboard() {
         {/* Create Post Tab */}
         {activeTab === 'create' && (
           <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900">Create LinkedIn Post</h3>
-              <button onClick={handleGenerateAI} disabled={generatingAI} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:shadow-lg font-medium disabled:opacity-50 flex items-center space-x-2">
+              <button onClick={handleGenerateAI} disabled={generatingAI} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:shadow-lg font-medium disabled:opacity-50 flex items-center space-x-2 transition-all">
                 {generatingAI ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
@@ -312,11 +320,53 @@ export default function Dashboard() {
             </div>
 
             <form onSubmit={handlePostSubmit}>
-              <textarea value={postContent} onChange={(e) => setPostContent(e.target.value)} placeholder="What do you want to share with your network?" rows={8} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" disabled={posting} />
+              <div className="relative">
+                <textarea 
+                  value={postContent} 
+                  onChange={handleTextareaChange}
+                  placeholder="What do you want to share with your network? Share your insights, achievements, or professional thoughts..." 
+                  rows={6}
+                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition-all font-normal text-[15px] leading-relaxed text-gray-900 placeholder:text-gray-400 placeholder:text-sm overflow-hidden"
+                  style={{ minHeight: '180px', maxHeight: '500px' }}
+                  disabled={posting} 
+                />
+                
+                {/* Character count with visual feedback */}
+                <div className="absolute bottom-3 right-3 flex items-center space-x-2">
+                  <div className={`text-sm font-medium px-3 py-1 rounded-full transition-all ${
+                    postContent.length === 0 ? 'bg-gray-100 text-gray-400' :
+                    postContent.length < 100 ? 'bg-blue-100 text-blue-600' :
+                    postContent.length < 1000 ? 'bg-green-100 text-green-600' :
+                    postContent.length < 3000 ? 'bg-yellow-100 text-yellow-700' :
+                    'bg-red-100 text-red-600'
+                  }`}>
+                    {postContent.length} {postContent.length === 1 ? 'character' : 'characters'}
+                  </div>
+                </div>
+              </div>
               
-              <div className="flex items-center justify-between mt-4">
-                <div className="text-sm text-gray-500">{postContent.length} characters</div>
-                <button type="submit" disabled={posting || !postContent.trim()} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center space-x-2">
+              <div className="flex items-center justify-between mt-6">
+                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                  <span className="flex items-center space-x-1">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Max 3,000 characters</span>
+                  </span>
+                  {postContent.length > 0 && (
+                    <span className="flex items-center space-x-1 text-green-600">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Ready to publish</span>
+                    </span>
+                  )}
+                </div>
+                <button 
+                  type="submit" 
+                  disabled={posting || !postContent.trim() || postContent.length > 3000} 
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center space-x-2"
+                >
                   {posting ? (
                     <>
                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
@@ -335,8 +385,15 @@ export default function Dashboard() {
             </form>
 
             {message && (
-              <div className={`mt-4 p-4 rounded-lg ${message.type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
-                {message.text}
+              <div className={`mt-6 p-4 rounded-lg flex items-start space-x-3 ${message.type === 'success' ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {message.type === 'success' ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  )}
+                </svg>
+                <span className="font-medium">{message.text}</span>
               </div>
             )}
           </div>
@@ -367,7 +424,7 @@ export default function Dashboard() {
                     </div>
                     <span className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</span>
                   </div>
-                  <p className="text-gray-800 whitespace-pre-wrap">{post.content}</p>
+                  <p className="text-gray-800 whitespace-pre-wrap leading-relaxed">{post.content}</p>
                   {post.publishedAt && (
                     <div className="mt-4 pt-4 border-t border-gray-200 text-sm text-gray-600">
                       Published: {new Date(post.publishedAt).toLocaleString()}

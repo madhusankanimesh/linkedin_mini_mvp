@@ -6,6 +6,8 @@ import { UserModule } from './user/user.module';
 import { PostsModule } from './posts/posts.module';
 import { AppController } from './app.controller';
 import { User } from './user/user.entity';
+import { Post } from './posts/posts.entity';
+import { UserPreferences } from './user/user-preferences.entity';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { User } from './user/user.entity';
         username: configService.get('DB_USERNAME', 'root'),
         password: configService.get('DB_PASSWORD', ''),
         database: configService.get('DB_DATABASE', 'linkedin_mini_mvp'),
-        entities: [User],
+        entities: [User, Post, UserPreferences],
         synchronize: configService.get('NODE_ENV') !== 'production',
         logging: configService.get('NODE_ENV') === 'development',
       }),

@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne } from 'typeorm';
+import { Post } from '../posts/posts.entity';
+import { UserPreferences } from './user-preferences.entity';
 
 @Entity('users')
 export class User {
@@ -25,6 +27,12 @@ export class User {
 
   @Column({ type: 'text' })
   accessToken: string;
+
+  @OneToMany(() => Post, post => post.user)
+  posts: Post[];
+
+  @OneToOne(() => UserPreferences, preferences => preferences.user)
+  preferences: UserPreferences;
 
   @CreateDateColumn()
   createdAt: Date;

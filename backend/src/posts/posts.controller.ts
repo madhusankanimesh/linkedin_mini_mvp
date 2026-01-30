@@ -1,12 +1,16 @@
 import { Controller, Post, Body, UseGuards, Req, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PostsService } from './posts.service';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsBoolean } from 'class-validator';
 
 class CreatePostDto {
   @IsNotEmpty()
   @IsString()
   content: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isAIGenerated?: boolean;
 }
 
 @Controller('posts')
@@ -16,7 +20,29 @@ export class PostsController {
   @Post('create')
   @UseGuards(AuthGuard('jwt'))
   async createPost(@Req() req, @Body() createPostDto: CreatePostDto) {
-    return this.postsService.createPost(req.user.id, createPostDto.content);
+    return this.postsService.createPost(
+      req.user.id, 
+      createPostDto.content, 
+      createPostDto.isAIGenerated || false
+    );
+  }
+
+  @Get('generate-ai-content')
+  @UseGuards(AuthGuard('jwt'))
+  async generateAIContent(@Req() req) {
+    return this.postsService.generateAIContent(req.user.id);
+  }
+
+  @Get('my-posts')
+  @UseGuards(AuthGuard('jwt'))
+  async getMyPosts(@Req() req) {
+    return this.postsService.getUserPosts(req.user.id);
+  }
+
+  @Get('all')
+  @UseGuards(AuthGuard('jwt'))
+  async getAllPosts() {
+    return this.postsService.getAllPosts();
   }
 
   @Get('linkedin-profile')

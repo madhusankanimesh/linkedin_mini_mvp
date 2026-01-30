@@ -7,7 +7,7 @@ export class PostsService {
   constructor(private readonly userService: UserService) {}
 
   async createPost(userId: string, content: string): Promise<any> {
-    const user = await this.userService.findById(userId);
+    const user = await this.userService.findById(Number(userId));
     if (!user) {
       throw new BadRequestException('User not found');
     }
@@ -84,7 +84,7 @@ export class PostsService {
   }
 
   async getLinkedInProfile(userId: string): Promise<any> {
-    const user = await this.userService.findById(userId);
+    const user = await this.userService.findById(Number(userId));
     if (!user || !user.accessToken) {
       throw new BadRequestException('User not found or not authenticated');
     }

@@ -250,24 +250,56 @@ export default function Dashboard() {
             <form onSubmit={handlePreferencesSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Your Role</label>
-                <input type="text" value={preferences.role || ''} onChange={(e) => setPreferences({...preferences, role: e.target.value})} placeholder="e.g., Software Engineer, Marketing Manager" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                <input 
+                  type="text" 
+                  value={preferences.role || ''} 
+                  onChange={(e) => setPreferences({...preferences, role: e.target.value})} 
+                  placeholder="e.g., Software Engineer, Marketing Manager" 
+                  autoComplete="off"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-[15px] text-gray-900 placeholder:text-gray-400" 
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Your Goals</label>
-                <textarea value={preferences.goals || ''} onChange={(e) => setPreferences({...preferences, goals: e.target.value})} placeholder="What are your professional goals?" rows={3} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                <textarea 
+                  value={preferences.goals || ''} 
+                  onChange={(e) => setPreferences({...preferences, goals: e.target.value})} 
+                  placeholder="What are your professional goals? e.g., Build my personal brand, Connect with industry leaders" 
+                  rows={3} 
+                  autoComplete="off"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-[15px] leading-relaxed text-gray-900 placeholder:text-gray-400 resize-none" 
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Your Challenges</label>
-                <textarea value={preferences.challenges || ''} onChange={(e) => setPreferences({...preferences, challenges: e.target.value})} placeholder="What challenges are you facing?" rows={3} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                <textarea 
+                  value={preferences.challenges || ''} 
+                  onChange={(e) => setPreferences({...preferences, challenges: e.target.value})} 
+                  placeholder="What challenges are you facing? e.g., Finding time to create content, Standing out in a crowded market" 
+                  rows={3} 
+                  autoComplete="off"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-[15px] leading-relaxed text-gray-900 placeholder:text-gray-400 resize-none" 
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Target Country</label>
-                  <input type="text" value={preferences.targetCountry || ''} onChange={(e) => setPreferences({...preferences, targetCountry: e.target.value})} placeholder="e.g., USA, Global" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" />
+                  <input 
+                    type="text" 
+                    value={preferences.targetCountry || ''} 
+                    onChange={(e) => setPreferences({...preferences, targetCountry: e.target.value})} 
+                    placeholder="e.g., USA, Global, UK" 
+                    autoComplete="off"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-[15px] text-gray-900 placeholder:text-gray-400" 
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Content Tone</label>
-                  <select value={preferences.contentTone || 'professional'} onChange={(e) => setPreferences({...preferences, contentTone: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                  <select 
+                    value={preferences.contentTone || 'professional'} 
+                    onChange={(e) => setPreferences({...preferences, contentTone: e.target.value})} 
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-[15px] text-gray-900 bg-white"
+                  >
                     <option value="professional">Professional</option>
                     <option value="casual">Casual</option>
                     <option value="inspirational">Inspirational</option>
@@ -275,11 +307,11 @@ export default function Dashboard() {
                   </select>
                 </div>
               </div>
-              <div className="flex space-x-3">
-                <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium">
+              <div className="flex space-x-3 pt-2">
+                <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-medium transition-all shadow-sm hover:shadow-md">
                   Save Preferences
                 </button>
-                <button type="button" onClick={() => setShowPreferences(false)} className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 font-medium">
+                <button type="button" onClick={() => setShowPreferences(false)} className="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 font-medium transition-all">
                   Cancel
                 </button>
               </div>

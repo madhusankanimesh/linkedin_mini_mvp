@@ -55,13 +55,34 @@ This project fully satisfies all technical assessment requirements:
 
 **[Watch Demo Video](#)** *(Replace with your demo video link)*
 
-**Screenshots:**
+### Screenshots:
 
-1. **LinkedIn OAuth Flow** - Real authorization screen
-2. **Dashboard with Real Data** - Profile fetched from LinkedIn API
-3. **AI Content Generation** - Personalized post creation
-4. **Published Post** - Actual post on LinkedIn with Post ID
+#### 1. LinkedIn OAuth Authentication Flow
+![LinkedIn OAuth Flow](./screenshots/oauth-login.png)
+*Real LinkedIn authorization screen with required permissions*
 
+#### 2. Dashboard with Real Profile Data
+![Dashboard](./screenshots/dashboard.png)
+*Profile information fetched directly from LinkedIn API*
+
+#### 3. AI Content Generation
+![AI Content Generation](./screenshots/ai-generation.png)
+*Personalized post creation based on user preferences*
+
+#### 4. Preferences setting page
+![Published Post](./screenshots/preferences_setting.png)
+
+
+#### 5. Published Post on LinkedIn
+![Published Post](./screenshots/published-post.png)
+*Actual post visible on LinkedIn with Post ID*
+
+#### 6. Post History & Analytics
+![Post History](./screenshots/post-history.png)
+*Complete history of published posts with status tracking*
+
+#### 6. DataBase
+![Post History](./screenshots/database.png)
 ---
 
 ## ✨ Core Features

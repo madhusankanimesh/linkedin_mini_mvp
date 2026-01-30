@@ -1,14 +1,7 @@
 # 🚀 LinkedIn Mini MVP - Technical Assessment Project
-
-> **A production-ready LinkedIn automation platform with real OAuth integration, AI-powered content generation, and direct post publishing capabilities.**
-
-Built as a comprehensive technical assessment demonstrating full-stack development expertise with **real LinkedIn API integration** (not mocked), secure authentication flows, and intelligent content generation.
-
 ---
 
 ## 📋 Table of Contents
-
-- [Assessment Compliance](#-assessment-compliance)
 - [Live Demo](#-live-demo)
 - [Core Features](#-core-features)
 - [Tech Stack](#-tech-stack)
@@ -21,39 +14,9 @@ Built as a comprehensive technical assessment demonstrating full-stack developme
 - [Troubleshooting](#-troubleshooting)
 - [Deployment Checklist](#-deployment-checklist)
 
----
-
-## ✅ Assessment Compliance
-
-This project fully satisfies all technical assessment requirements:
-
-### ✔️ Mandatory Requirements Met
-
-| Requirement | Implementation | Status |
-|-------------|----------------|--------|
-| **Real LinkedIn OAuth 2.0** | Full OAuth flow with LinkedIn Developer App | ✅ Complete |
-| **Frontend: Next.js** | Next.js 15 with TypeScript & Tailwind CSS | ✅ Complete |
-| **Backend: NestJS** | RESTful APIs with proper architecture | ✅ Complete |
-| **Database: MySQL** | TypeORM with proper schema design | ✅ Complete |
-| **Required Scopes** | `r_liteprofile`, `r_emailaddress`, `w_member_social` | ✅ Complete |
-| **Real Profile Data** | First name, last name, headline, profile image | ✅ Complete |
-| **AI Personalization** | Role, goals, challenges, country, tone persistence | ✅ Complete |
-| **Content Generation** | Dynamic AI-powered post creation | ✅ Complete |
-| **Publish to LinkedIn** | Real posts via `w_member_social` permission | ✅ Complete |
-| **Dashboard** | Profile summary, preferences, post history | ✅ Complete |
-
-### 🚫 Disqualification Criteria - All Avoided
-
-- ❌ No mock LinkedIn data - **Real API calls only**
-- ❌ No fake OAuth - **Production LinkedIn OAuth 2.0**
-- ❌ No static content - **Dynamic AI generation**
-- ❌ No hardcoded tokens - **Secure token management**
-
----
-
 ## 🎥 Live Demo
 
-**[Watch Demo Video](#)** *(Replace with your demo video link)*
+**[Watch Demo Video](#)** *(https://youtu.be/4vSf_paNTws)*
 
 ### Screenshots:
 
